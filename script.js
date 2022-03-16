@@ -58,6 +58,7 @@ function insert(num) {
             str = document.getElementById('result').innerHTML;
             document.getElementById('result').innerHTML = str + ".";
             qtdnum++;
+            numbers[numbersAux] += ".";
         }
     }
 
