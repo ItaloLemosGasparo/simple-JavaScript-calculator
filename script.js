@@ -5,6 +5,7 @@ var lastCharacter;
 var flagclean = 0;
 
 function insert(num) {
+    // Verifies if num is a number or a simbol
     if (num == "+" || num == "-" || num == "*" || num == "/" || num == "%" || num == "=") {
         if (num == "%") {
             number = document.getElementById('result').innerHTML;
@@ -23,6 +24,7 @@ function insert(num) {
         tempNumberAux++;
         flagclean = 1;
     }
+
     else if ((num > -1 && num < 10) || num == ".") {
         qtdnum++;
         if (tempNumber[tempNumberAux] === undefined || flagclean == 1) {
@@ -41,7 +43,7 @@ function insert(num) {
         else {
             if ((lastCharacter == "+" || lastCharacter == "-" || lastCharacter == "*" || lastCharacter == "/"
                 || lastCharacter == "%" || lastCharacter == "=") && !(num > -1 && num < 10)) {
-                back();
+                back(1);
                 lastCharacter = "";
                 insert1();
             } else {
@@ -50,13 +52,6 @@ function insert(num) {
             }
         }
     }
-    // /* getting what already is on the "input" */
-    // number = document.getElementById('result').innerHTML;
-    // /* Cheking what already is in the "input" */
-    // if (number == '0' || number == 'undefined')
-    //     document.getElementById('result').innerHTML = num;
-    // else
-    //     document.getElementById('result').innerHTML = number + num;
 }
 
 function clean() {
@@ -66,12 +61,13 @@ function clean() {
     document.getElementById('result').innerHTML = "";
 }
 
-function back() {
+function back(flag = 0) {
     number = document.getElementById('result').innerHTML;
-    if (number.substr(-1) > -1 || number.substr(-1) < 10 || number.substr(-1) == ".") {
+    if ((number.substr(-1) > -1 || number.substr(-1) < 10 || number.substr(-1) == ".") || flag == 1) {
         qtdnum--;
         document.getElementById('result').innerHTML = number.substring(0, number.length - 1);
-        tempNumber[tempNumberAux] = tempNumber[tempNumberAux].substring(0, tempNumber[tempNumberAux].length - 1);
+        if (flag != 1)
+            tempNumber[tempNumberAux] = tempNumber[tempNumberAux].substring(0, tempNumber[tempNumberAux].length - 1);
     }
 }
 
