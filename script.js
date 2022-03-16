@@ -108,9 +108,9 @@ function back(flag = 0) {
 
 function calculate() {
     str = document.getElementById('result').innerHTML;
-    numbers[0] = eval(str);
+    numbers[0] = eval(str).toFixed(3);
     if (str) {
-        document.getElementById('result').innerHTML = eval(str);
+        document.getElementById('result').innerHTML = eval(str).toFixed(3);
     }
     qtdnum = document.getElementById('result').innerHTML.length;
 
