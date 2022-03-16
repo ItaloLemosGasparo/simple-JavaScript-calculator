@@ -6,3 +6,8 @@ Fell free to use or help.
 bugs:
   1: X/0 = Infinity.
   
+# Some Pics:
+
+<img style="width: 640px" src="https://uploaddeimagens.com.br/images/003/776/222/full/debugging.jpg?1647451052" alt="Debugging">
+<img style="width: 640px" src="https://uploaddeimagens.com.br/images/003/776/233/full/var_debugging.jpg?1647451305" alt="Var_Debugging">
+  
