@@ -22,6 +22,7 @@ function insert(num) {
                 document.getElementById('result').innerHTML = str + res;
                 // replacing the % number like 50 + 50%(<- this one) for the res(25 in this case)
                 numbers[numbersAux] = res;
+                qtdnum = numbers[numbersAux].length;
             }
             //break the insert to avoid problens after calc or not the %
             return;
@@ -35,7 +36,7 @@ function insert(num) {
         else {
             // tag 1 means its to replace a simbol
             back(1);
-            insertSimblo();
+            insertSimblo(1);
         }
         // Number
     } else if (num > -1 && num < 10) {
@@ -52,7 +53,8 @@ function insert(num) {
         // "." or ","
     } else if (num == "." || num == ",") {
         // cheking if lastCharacter is a number
-        if (lastCharacter > -1 && lastCharacter < 10) {
+        str = document.getElementById('result').innerHTML;
+        if ((lastCharacter > -1 && lastCharacter < 10) && str.substr(-1) != ".") {
             str = document.getElementById('result').innerHTML;
             document.getElementById('result').innerHTML = str + ".";
             qtdnum++;
@@ -70,12 +72,15 @@ function insert(num) {
         qtdnum++;
     }
 
-    function insertSimblo() {
+    function insertSimblo(rep = 0) {
         str = document.getElementById('result').innerHTML;
         document.getElementById('result').innerHTML = str + num;
 
+        // Cheking if its a replacement. we can't incress that if it's a replacement cuz it will broke the code for %
+        if (rep == 0)
+            numbersAux++;
+        // \/ no problem with these yet
         lastCharacter = num;
-        numbersAux++;
         qtdnum = 0;
     }
 }
@@ -110,12 +115,11 @@ function calculate() {
     str = document.getElementById('result').innerHTML;
     numbers[0] = eval(str).toFixed(3);
     if (str) {
-        document.getElementById('result').innerHTML = eval(str).toFixed(3);
+        document.getElementById('result').innerHTML = eval(str);
     }
     qtdnum = document.getElementById('result').innerHTML.length;
 
     replace = 1;
-    qtdnum = 0;
     numbersAux = 0;
 }
 
