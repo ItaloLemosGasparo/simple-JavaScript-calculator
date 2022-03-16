@@ -1,21 +1,36 @@
 var number;
 var tempNumber = [], tempNumberAux = 0, qtdnum = 0;
 var lastCharacter;
+/* flag clean all */
+var flagclean = 0;
 
 function insert(num) {
     if (num == "+" || num == "-" || num == "*" || num == "/" || num == "%" || num == "=") {
         if (num == "%") {
+            number = document.getElementById('result').innerHTML;
             document.getElementById('result').innerHTML = number.substring(0, number.length - qtdnum);
 
+            number = document.getElementById('result').innerHTML;
+            var x = eval(tempNumber[tempNumberAux - 1] + "/ 100.0 *" + tempNumber[tempNumberAux]).toFixed(2);
+            document.getElementById('result').innerHTML = number + x;
+
+            tempNumber[tempNumberAux] = x;
+            return
         } else {
             insert1();
         }
         qtdnum = 0;
         tempNumberAux++;
+        flagclean = 1;
     }
-    else if (num > -1 && num < 10) {
+    else if ((num > -1 && num < 10) || num == ".") {
         qtdnum++;
-
+        if (tempNumber[tempNumberAux] === undefined || flagclean == 1) {
+            tempNumber[tempNumberAux] = num;
+            flagclean = 0;
+        }
+        else
+            tempNumber[tempNumberAux] += num;
         insert1();
     }
 
@@ -45,19 +60,27 @@ function insert(num) {
 }
 
 function clean() {
+    flagclean = 1;
     qtdnum = 0;
     tempNumberAux = 0;
     document.getElementById('result').innerHTML = "";
 }
 
 function back() {
-    qtdnum--;
     number = document.getElementById('result').innerHTML;
-    document.getElementById('result').innerHTML = number.substring(0, number.length - 1);
+    if (number.substr(-1) > -1 || number.substr(-1) < 10 || number.substr(-1) == ".") {
+        qtdnum--;
+        document.getElementById('result').innerHTML = number.substring(0, number.length - 1);
+        tempNumber[tempNumberAux] = tempNumber[tempNumberAux].substring(0, tempNumber[tempNumberAux].length - 1);
+    }
 }
 
 function calculate() {
+    flagclean = 1;
+    qtdnum = 0;
+    tempNumberAux = 0;
     number = document.getElementById('result').innerHTML;
+    tempNumber[0] = eval(number);
     if (number) {
         document.getElementById('result').innerHTML = eval(number);
     }
