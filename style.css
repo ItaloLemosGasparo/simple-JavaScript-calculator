@@ -11,9 +11,9 @@
 .calculator {
     /*Possicioning*/
     position: absolute;
-    transform: translate(-50%, -50%);
+    /*transform: translate(100%, -50%);
     top: 50%;
-    left: 50%;
+    left: 50%;*/    
     /*Font and color*/
     background-color: black;
     font-family: 'Roboto', sans-serif;
@@ -24,7 +24,7 @@
     border-width: 1px;
     border-color: black;
     /* "edge spacing" */
-    padding: 15px;
+    padding: 15px;   
 }
 
 .buttom {    
