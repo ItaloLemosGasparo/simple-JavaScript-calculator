@@ -90,6 +90,7 @@ function clean() {
     replace = 1;
     qtdnum = 0;
     numbersAux = 0;
+    numbers=[];
     document.getElementById('result').innerHTML = "0";
 }
 
