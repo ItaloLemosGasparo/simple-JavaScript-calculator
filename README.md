@@ -1,13 +1,13 @@
-# simple-calculator *Work in progress*
+# JavaScript Calculator
 
-A simple calculator based on MiCalculator. Made with HTML, CSS and JavaScript.
-Fell free to use or help.
+A simple calculator built using JavaScript, HTML, and CSS. This calculator supports basic arithmetic operations and percentage calculations, providing a user-friendly interface for performing calculations.
 
-bugs/Errors:
-  Please report.  
-  
-# Some Pics:
+## Features
 
-<img style="width: 640px" src="https://uploaddeimagens.com.br/images/003/776/222/full/debugging.jpg?1647451052" alt="Debugging">
-<img style="width: 640px" src="https://uploaddeimagens.com.br/images/003/776/233/full/var_debugging.jpg?1647451305" alt="Var_Debugging">
-  
+- Basic arithmetic operations: Addition, Subtraction, Multiplication, and Division
+- Percentage calculation
+- Supports decimal numbers
+- Clear and backspace functionality
+- Responsive design for better user experience
+<br/>
+<img src="https://i.ibb.co/QdFRFPK/imagem-2024-10-27-184915841.png" alt="Screenshot">
