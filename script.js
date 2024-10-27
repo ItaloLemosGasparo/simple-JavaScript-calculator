@@ -1,151 +1,139 @@
 var str;
 var numbers = [], numbersAux = 0, qtdnum = 0;
-// Keeps the last character like "1" ou "."
+// Keeps track of the last character entered (e.g., "1" or ".")
 var lastCharacter = 0;
-// Flag to check if we need to add ou replace numbers in tempNumber
+// Flag to check if we need to add or replace numbers in tempNumber
 var replace = 0;
 
 function insert(num) {
-    // Check if num is a number or a simbol
-    if (num == "+" || num == "-" || num == "*" || num == "/" || num == "%" || num == "=") {
-        // check if its about %
-        if (num == "%") {
-            // Cheking if its possible to calc the %
+    // Check if the input is an operator or an equal sign
+    if (num === "+" || num === "-" || num === "*" || num === "/" || num === "%" || num === "=") {
+        // Handle the percentage operation
+        if (num === "%") {
+            // Check if it's possible to calculate the percentage
             if (numbersAux > 0 && qtdnum > 0) {
-                // like the function back but with "qtdnum times backspace"
+                // Remove the last input based on the number of digits entered
                 str = document.getElementById('result').innerHTML;
                 document.getElementById('result').innerHTML = str.substring(0, str.length - qtdnum);
 
                 str = document.getElementById('result').innerHTML;
-                // \/ calculing the % and keeping it on res
+                // Calculate the percentage and keep it on res
                 var res = eval(numbers[numbersAux - 1] + "/100*" + numbers[numbersAux]).toFixed(2);
                 document.getElementById('result').innerHTML = str + res;
-                // replacing the % number like 50 + 50%(<- this one) for the res(25 in this case)
+                // Replace the percentage input with the result
                 numbers[numbersAux] = res;
                 qtdnum = numbers[numbersAux].length;
             }
-            //break the insert to avoid problens after calc or not the %
+            // Exit the insert function to avoid issues after calculating the percentage
             return;
         }
-        // checking if the last character is or not a number
-        // if its a number just insert the simbol
-        else if (lastCharacter > -1 || lastCharacter < 10) {
-            insertSimblo();
-        }
-        //if its not a number do a "backspace" and replace the simbol
-        else {
-            // tag 1 means its to replace a simbol
+        
+        // Check if the last character is a number
+        if (lastCharacter >= 0 && lastCharacter <= 9) {
+            insertSymbol(); // Insert the operator if the last character was a number
+        } else {
+            // Replace the operator if the last character was not a number
             back(1);
-            insertSimblo(1);
+            insertSymbol(1);
         }
-        // Number
-    } else if (num > -1 && num < 10) {
-        // add or repalce number in tempNumber[x]
-        if (numbers[numbersAux] === undefined || replace == 1) {
-            numbers[numbersAux] = num;
-            // \/ to stop replacing
-            replace = 0;
-        }
-        else
+    } else if (num >= 0 && num <= 9) { // Handle numbers
+        // Add or replace the number in the temporary array
+        if (numbers[numbersAux] === undefined || replace === 1) {
+            numbers[numbersAux] = num.toString();
+            replace = 0; // Stop replacing
+        } else {
             numbers[numbersAux] += num;
-        // insert the number
-        insertNumber();
-        // "." or ","
-    } else if (num == "." || num == ",") {
-        // cheking if lastCharacter is a number
+        }
+        insertNumber(); // Insert the number into the display
+    } else if (num === "." || num === ",") { // Handle decimal points
         str = document.getElementById('result').innerHTML;
-        if ((lastCharacter > -1 && lastCharacter < 10) && str.substr(-1) != ".") {
-            str = document.getElementById('result').innerHTML;
-            document.getElementById('result').innerHTML = str + ".";
+        // Check if the last character is a number and if the last input is not already a decimal point
+        if ((lastCharacter >= 0 && lastCharacter <= 9) && str.substr(-1) !== ".") {
+            str += ".";
+            document.getElementById('result').innerHTML = str;
             qtdnum++;
             numbers[numbersAux] += ".";
         }
     }
 
+    // Function to insert the number into the display
     function insertNumber() {
         str = document.getElementById('result').innerHTML;
-        if (str == '0' || str == 'undefined')
+        if (str === '0' || str === 'undefined') {
             document.getElementById('result').innerHTML = num;
-        else {
+        } else {
             document.getElementById('result').innerHTML = str + num;
         }
-        lastCharacter = num;
-        qtdnum++;
+        lastCharacter = num; // Update last character
+        qtdnum++; // Increment quantity of numbers
     }
 
-    function insertSimblo(rep = 0) {
+    // Function to insert operators
+    function insertSymbol(rep = 0) {
         str = document.getElementById('result').innerHTML;
         document.getElementById('result').innerHTML = str + num;
 
-        // Cheking if its a replacement. we can't incress that if it's a replacement cuz it will broke the code for %
-        if (rep == 0)
-            numbersAux++;
-        // \/ no problem with these yet
-        lastCharacter = num;
-        qtdnum = 0;
+        // Increment numbersAux only if it's not a replacement
+        if (rep === 0) numbersAux++;
+        lastCharacter = num; // Update last character
+        qtdnum = 0; // Reset quantity of numbers
     }
 }
 
+// Function to clear the calculator
 function clean() {
     replace = 1;
     qtdnum = 0;
     numbersAux = 0;
-    numbers=[];
-    document.getElementById('result').innerHTML = "0";
+    numbers = [];
+    document.getElementById('result').innerHTML = "0"; // Reset display
 }
 
+// Function to handle backspace functionality
 function back(flag = 0) {
     str = document.getElementById('result').innerHTML;
-    // cheking the last char on the String(result) 
-    // if its a number or a ".". Or the flag of Replacing simbol is 1
-    if ((str.substr(-1) > -1 || str.substr(-1) < 10 || str.substr(-1) == ".") || flag == 1) {
+    // Check if the last character is a number or a "." or if it's a replacement flag
+    if ((str.substr(-1) >= '0' && str.substr(-1) <= '9') || str.substr(-1) === "." || flag === 1) {
         document.getElementById('result').innerHTML = str.substring(0, str.length - 1);
-        if (flag != 1) {
-            if (numbers[numbersAux] !== undefined) {
-                numbers[numbersAux] = numbers[numbersAux].substring(0, numbers[numbersAux].length - 1);
-                qtdnum--;
-            }
+        if (flag !== 1 && numbers[numbersAux] !== undefined) {
+            // Remove the last character from the number being entered
+            numbers[numbersAux] = numbers[numbersAux].substring(0, numbers[numbersAux].length - 1);
+            qtdnum--; // Decrement the quantity of numbers
         }
     }
-    str = document.getElementById('result').innerHTML;
-    if (str == "") {
+    // If the display is empty, reset to 0
+    if (document.getElementById('result').innerHTML === "") {
         document.getElementById('result').innerHTML = "0";
     }
 }
 
+// Function to calculate the result
 function calculate() {
     str = document.getElementById('result').innerHTML;
-    numbers[0] = eval(str).toFixed(3);
     if (str) {
-        document.getElementById('result').innerHTML = eval(str);
+        // Evaluate the expression and display the result
+        numbers[0] = eval(str).toFixed(3); // Save result to numbers array
+        document.getElementById('result').innerHTML = numbers[0];
     }
     qtdnum = document.getElementById('result').innerHTML.length;
-
-    replace = 1;
-    numbersAux = 0;
+    replace = 1; // Set flag to replace next input
+    numbersAux = 0; // Reset auxiliary counter
 }
 
-// not 100% sure about the code below
-
-/* converts pressed key to String */
+// Function to convert pressed key to String
 function keyPressed(evt) {
     evt = evt || window.event;
     var key = evt.keyCode || evt.which;
     return String.fromCharCode(key);
 }
 
-/* check if any keys are pressed while this page is focused */
+// Check if any keys are pressed while the page is focused
 document.onkeypress = function (evt) {
-    number = document.getElementById('result').innerHTML;
     var key = keyPressed(evt);
-
-    // If = is pressed 
-    if (key == '=')
+    // If '=' or 'Enter' key is pressed, calculate the result
+    if (key === '=' || evt.which === 13) {
         calculate();
-    // if its the "Enter" key calls Calculate
-    if (evt.which == 13)
-        calculate();
-
-    // send to Insert the key what was pressed
+    }
+    // Send the pressed key to the insert function
     insert(key);
 }
