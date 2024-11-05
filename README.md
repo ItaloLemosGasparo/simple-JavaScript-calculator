@@ -2,6 +2,8 @@
 
 A simple calculator built using JavaScript, HTML, and CSS. This calculator supports basic arithmetic operations and percentage calculations, providing a user-friendly interface for performing calculations.
 
+Test pag: https://italolemosgasparo.github.io/simple-JavaScript-calculator/
+
 ## Features
 
 - Basic arithmetic operations: Addition, Subtraction, Multiplication, and Division
